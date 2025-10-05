@@ -1,0 +1,176 @@
+.main-content {
+  flex: 1;
+  background-color: white;
+  padding: 20px;
+  margin: 20px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  height: calc(100vh - 140px);
+  overflow-y: auto;
+}
+
+.content-header {
+  margin-bottom: 30px;
+}
+
+.content-title {
+  color: #1e40af;
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0 0 10px 0;
+}
+
+.content-instruction {
+  color: #1e40af;
+  font-size: 14px;
+  margin: 0;
+}
+
+.meal-management-section {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.section-divider {
+  position: relative;
+  text-align: center;
+  margin: 20px 0;
+}
+
+.section-divider hr {
+  border: none;
+  height: 1px;
+  background-color: #d1d5db;
+  margin: 0;
+}
+
+.section-label {
+  background-color: white;
+  padding: 0 15px;
+  color: #374151;
+  font-weight: 600;
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.student-info {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.student-roll-section {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.form-label {
+  font-weight: 600;
+  color: #374151;
+  min-width: 100px;
+}
+
+.input-group {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.form-input {
+  padding: 8px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  font-size: 14px;
+  min-width: 150px;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.show-btn {
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.show-btn:hover {
+  background-color: #2563eb;
+}
+
+.student-details {
+  margin-left: 115px;
+}
+
+.student-details p {
+  color: #6b7280;
+  font-size: 14px;
+  margin: 0;
+}
+
+.date-selection {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+}
+
+.date-input-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.meal-status-control {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.radio-group {
+  display: flex;
+  gap: 20px;
+}
+
+.radio-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  color: #374151;
+}
+
+.radio-label input[type="radio"] {
+  margin: 0;
+  cursor: pointer;
+}
+
+.radio-text {
+  user-select: none;
+}
+
+.update-btn {
+  background-color: #10b981;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+.update-btn:hover {
+  background-color: #059669;
+}
