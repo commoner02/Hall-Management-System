@@ -1,15 +1,26 @@
 import mongoose from "mongoose";
+import { IMeal } from "./meal.interface";
 
-const mealSchema = new mongoose.Schema(
+const MealSchema = new mongoose.Schema<IMeal>(
   {
-    user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-    date: { type: Date, required: true },
-    lunch: { type: Boolean, default: false },
-    dinner: { type: Boolean, default: false },
+    meals:{
+      type: [String],
+      required: true
+    },
+    items: {
+      type: [{
+        item: { type: String, required: true },
+        quantity: { type: Number, required: true },
+        price: { type: Number, required: true }
+      }],
+      required: true
+    },
+    type: {
+      type: String
+    }
   },
   { timestamps: true }
 );
 
-mealSchema.index({ user: 1, date: 1 }, { unique: true });
 
-export const Meal = mongoose.model("Meal", mealSchema);
+export const Meal = mongoose.model("Meal", MealSchema);

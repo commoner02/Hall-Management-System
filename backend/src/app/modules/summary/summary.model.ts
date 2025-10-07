@@ -1,12 +1,21 @@
 import mongoose from "mongoose";
+import { IRate, ISummary } from "./summary.interface";
 
-const summarySchema = new mongoose.Schema(
+const summarySchema = new mongoose.Schema<ISummary>(
   {
     date: { type: Date, unique: true, required: true },
-    totalLunch: { type: Number, default: 0 },
-    totalDinner: { type: Number, default: 0 },
-    totalCost: { type: Number, default: 0 },
-    mealRate: { type: Number, default: 0 }, // cost per meal
+    totalMeal: {
+      type: Number,
+      required: true,
+    },
+    mealRate: { type: Number, enum: IRate, default: IRate.normal },
+    totalMoney: {
+      type: Number,
+      required: true,
+    },
+    incentive: {
+      type: Number,
+    },
   },
   { timestamps: true }
 );
