@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { IROLE, IUser } from "./user.interface";
+import { IROLE, IStatus, IUser } from "./user.interface";
 
 const userSchema = new mongoose.Schema<IUser>(
   {
@@ -11,6 +11,11 @@ const userSchema = new mongoose.Schema<IUser>(
       enum: IROLE,
       default: IROLE.student,
     },
+    mealStatus:{
+      type: String,
+      enum: IStatus,
+      default: IStatus.on
+    }
   },
   { timestamps: true }
 );

@@ -99,3 +99,38 @@ export const updateUser = async (req: Request, res: Response) => {
     throw new AppError(httpStatus.BAD_REQUEST, err.message);
   }
 };
+
+export const updateMeal = async (req: Request, res: Response) => {
+  try {
+    const {id:userId, mealStatus} = req.body;
+    const user = await User.findById(userId);
+    if (!user) {
+      throw new AppError(httpStatus.NOT_FOUND, "User does not exist.");
+    }
+    const userSafe = await User.findByIdAndUpdate(user._id,{mealStatus}).select("-password");
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "Meal status updated successfully.",
+      data: { ...userSafe?.toObject() },
+    });
+  } catch (err: any) {
+    console.error(err);
+    throw new AppError(httpStatus.BAD_REQUEST, err.message);
+  }
+};
+
+export const getAll = async (req: Request, res: Response) => {
+  try {
+    const users = await User.find();
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "Users fetched successfully.",
+      data: users,
+    });
+  } catch (err: any) {
+    console.error(err);
+    throw new AppError(httpStatus.BAD_REQUEST, err.message);
+  }
+};
