@@ -1,15 +1,17 @@
+import mongoose from "mongoose";
 import app from "./app";
+import { envVars } from "./app/config";
+import { seedAdmin } from "./app/utils/seedAdmin";
 // import mongoose from "mongoose";
-import config from "./app/config/index";
 
 async function main() {
   try {
-    
     // if you are using MongoDB, uncomment the following lines
-    // await mongoose.connect(config.database_url as string);
+    await mongoose.connect(envVars.MONGODB_URL as string);
+    app.listen(envVars.PORT, async () => {
+      await seedAdmin();
+      console.log(`App running on port ${envVars.PORT}`);
 
-    app.listen(config.port, () => {
-      console.log(`App running on port ${config.port}`);
     });
   } catch (error) {
     console.log(error);
