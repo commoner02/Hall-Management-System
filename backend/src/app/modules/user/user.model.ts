@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
-import { IROLE } from "./user.type";
+import { IROLE, IUser } from "./user.interface";
 
-const userSchema = new mongoose.Schema(
+const userSchema = new mongoose.Schema<IUser>(
   {
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true, index: true },
