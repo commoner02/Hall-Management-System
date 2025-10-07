@@ -1,12 +1,13 @@
+import { envVars } from "../config";
 import { IROLE } from "../modules/user/user.interface";
 import { User } from "../modules/user/user.model";
 import { createUser, findUserByEmail } from "../modules/user/user.service";
 import bcrypt from "bcryptjs";
 
 export const seedAdmin = async () => {
-  const name = "Sakin";
-  const email = "saleheen.sakin@gmail.com";
-  const password = "Pass1234!";
+  const name = envVars.ADMIN_NAME;
+  const email = envVars.ADMIN_EMAIL;
+  const password = envVars.ADMIN_PASSWORD;
   const role = IROLE.admin;
   const existing = await findUserByEmail(email);
 
