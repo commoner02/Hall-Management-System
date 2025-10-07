@@ -4,8 +4,8 @@
   "description": "A TypeScript starter kit for building Express applications with best practices.",
   "main": "index.js",
   "bin": {
-  "ts-express-kit": "./dist/bin/cli.js"
-},
+    "ts-express-kit": "./dist/bin/cli.js"
+  },
   "scripts": {
     "build": "tsc",
     "lint": "eslint src --ignore-path .eslintignore --ext .ts",
@@ -16,7 +16,12 @@
     "prod": "node ./dist/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["typescript", "express", "node", "ts-express-kit"],
+  "keywords": [
+    "typescript",
+    "express",
+    "node",
+    "ts-express-kit"
+  ],
   "author": "Nasim",
   "license": "MIT",
   "repository": {
@@ -32,6 +37,7 @@
   "devDependencies": {
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
+    "@types/mongoose": "^5.11.96",
     "@typescript-eslint/eslint-plugin": "^8.39.0",
     "@typescript-eslint/parser": "^8.39.0",
     "eslint": "^9.32.0",
