@@ -1,17 +1,7 @@
 import React from 'react';
-import Header from '../../components/Header/Header';
-import Sidebar from '../../components/Sidebar/Sidebar';
-import MainContent from '../../components/MainContent/MainContent';
-import styles from './welcome.module.css';
+import { Navigate } from 'react-router-dom';
 
 export default function Welcome() {
-  return (
-    <div className={styles.app}>
-      <Header />
-      <div className={styles.appBody}>
-        <Sidebar />
-        <MainContent />
-      </div>
-    </div>
-  );
+  // Redirect to login if accessing welcome directly
+  return <Navigate to="/login" replace />;
 }
