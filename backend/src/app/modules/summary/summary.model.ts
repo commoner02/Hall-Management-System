@@ -3,7 +3,7 @@ import { IRate, ISummary } from "./summary.interface";
 
 const summarySchema = new mongoose.Schema<ISummary>(
   {
-    date: { type: Date, unique: true, required: true },
+    date: { type: String, unique: true, required: true },
     totalMeal: {
       type: Number,
       required: true,
@@ -12,9 +12,6 @@ const summarySchema = new mongoose.Schema<ISummary>(
     totalMoney: {
       type: Number,
       required: true,
-    },
-    incentive: {
-      type: Number,
     },
   },
   { timestamps: true }

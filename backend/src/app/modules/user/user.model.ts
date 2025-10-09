@@ -11,11 +11,11 @@ const userSchema = new mongoose.Schema<IUser>(
       enum: IROLE,
       default: IROLE.student,
     },
-    mealStatus:{
+    mealStatus: {
       type: String,
       enum: IStatus,
-      default: IStatus.on
-    }
+      default: IStatus.on,
+    },
   },
   { timestamps: true }
 );

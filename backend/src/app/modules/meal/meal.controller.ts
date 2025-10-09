@@ -3,17 +3,24 @@ import AppError from "../../errors/AppError";
 import { Request, Response } from "express";
 import sendResponse from "../../utils/sendResponse";
 import { Meal } from "./meal.model";
-import { IItem } from './meal.interface';
+import { IItem } from "./meal.interface";
 
 export const createMeal = async (req: Request, res: Response) => {
   try {
-    const {meals, items, date, type} = req.body;
+    const { meals, items, type } = req.body;
     let totalCost = 0;
-    items?.forEach((item:IItem)=>totalCost+=(item.price * item.quantity));
+    items?.forEach((item: IItem) => (totalCost += item.price * item.quantity));
     const payload = {
-        meals, items, type, totalCost,
-        date: new Date(date).toLocaleDateString()
-    }
+      meals,
+      items,
+      type,
+      totalCost,
+      date: new Date(Date.now()).toLocaleDateString("en-GB", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+      }),
+    };
     const meal = await Meal.create(payload);
     if (!meal) {
       throw new AppError(httpStatus.BAD_REQUEST, "Meal is not created.");
@@ -32,12 +39,14 @@ export const createMeal = async (req: Request, res: Response) => {
 
 export const updateMeal = async (req: Request, res: Response) => {
   try {
-    const {id}=req.params;
+    const { id } = req.params;
     const payload = req.body;
     let totalCost = 0;
-    payload?.items?.forEach((item:IItem)=>totalCost+=(item.price * item.quantity));
-    if(totalCost!=0){
-        payload.totalCost = totalCost;
+    payload?.items?.forEach(
+      (item: IItem) => (totalCost += item.price * item.quantity)
+    );
+    if (totalCost != 0) {
+      payload.totalCost = totalCost;
     }
     const meal = await Meal.findByIdAndUpdate(id, payload);
     if (!meal) {
@@ -59,7 +68,7 @@ export const updateMeal = async (req: Request, res: Response) => {
 //   try {
 //     const {id} = req.body;
 //     const meal = await Meal.findByIdAndDelete(id);
-    
+
 //     sendResponse(res, {
 //       success: true,
 //       statusCode: httpStatus.CREATED,
@@ -74,7 +83,7 @@ export const updateMeal = async (req: Request, res: Response) => {
 
 export const getMeal = async (req: Request, res: Response) => {
   try {
-    const {id} = req.params;
+    const { id } = req.params;
     const meal = await Meal.findById(id);
     sendResponse(res, {
       success: true,
@@ -90,14 +99,18 @@ export const getMeal = async (req: Request, res: Response) => {
 
 export const getMealByDate = async (req: Request, res: Response) => {
   try {
-    const {date} = req.body;
-    if(!date){
-        throw new AppError(httpStatus.BAD_REQUEST, "A date is mandatory")
+    const { date } = req.body;
+    if (!date) {
+      throw new AppError(httpStatus.BAD_REQUEST, "A date is mandatory");
     }
-    const dateValue = new Date(date).toLocaleDateString();
-    const meal = await Meal.findOne({date: dateValue});
-    if(!meal){
-        throw new AppError(httpStatus.BAD_REQUEST, "Meal not found.")
+    const dateValue = new Date(date).toLocaleDateString("en-GB", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    });
+    const meal = await Meal.findOne({ date: dateValue });
+    if (!meal) {
+      throw new AppError(httpStatus.BAD_REQUEST, "Meal not found.");
     }
     sendResponse(res, {
       success: true,
@@ -114,7 +127,7 @@ export const getMealByDate = async (req: Request, res: Response) => {
 export const getAllMeals = async (req: Request, res: Response) => {
   try {
     const meal = await Meal.find();
-    
+
     sendResponse(res, {
       success: true,
       statusCode: httpStatus.OK,
@@ -126,6 +139,3 @@ export const getAllMeals = async (req: Request, res: Response) => {
     throw new AppError(httpStatus.BAD_REQUEST, err.message);
   }
 };
-
-
-//meal things done. need to manage baord and then push

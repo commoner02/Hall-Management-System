@@ -5,9 +5,8 @@ export enum IRate{
 }
 
 export interface ISummary{
-    date: Date,
+    date: String,
     totalMeal: number,
     mealRate: IRate,
     totalMoney: number,
-    incentive: number
 }
