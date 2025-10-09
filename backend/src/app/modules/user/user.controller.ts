@@ -60,6 +60,24 @@ export const loginUser = async (req: Request, res: Response) => {
   }
 };
 
+
+export const logout = async (req: Request, res: Response) => {
+  try {
+    setAuthCookie(res, "" as string);
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "Logout successful",
+      data: null,
+    });
+  } catch (err: any) {
+    console.error(err);
+    throw new AppError(httpStatus.BAD_REQUEST, err.message);
+  }
+};
+
+
+
 export const getMe = async (req: Request, res: Response) => {
   try {
     const reqUser = req.user;
