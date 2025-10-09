@@ -12,7 +12,7 @@ export const authCheck =
     // const token = req.cookies?.token;
 
     if (!token) {
-      throw new AppError(httpStatus.UNAUTHORIZED, "No token provided");
+      throw new AppError(httpStatus.UNAUTHORIZED, "User not logged in.");
     }
 
     const verifiedToken = verifyToken(token as string);
