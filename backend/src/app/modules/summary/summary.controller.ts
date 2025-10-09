@@ -8,7 +8,7 @@ import { IStatus } from "../user/user.interface";
 
 export const getSummaryByDate = async (req: Request, res: Response) => {
   try {
-    const payload = req.body;
+    const payload = req.params;
     const date = new Date(payload?.date).toLocaleDateString("en-GB", {
       year: "numeric",
       month: "2-digit",
