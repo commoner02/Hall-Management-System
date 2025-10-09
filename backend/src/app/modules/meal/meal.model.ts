@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { IMeal } from "./meal.interface";
+import { IMeal, IType } from "./meal.interface";
 
 const MealSchema = new mongoose.Schema<IMeal>(
   {
@@ -16,7 +16,17 @@ const MealSchema = new mongoose.Schema<IMeal>(
       required: true
     },
     type: {
-      type: String
+      type: String,
+      default: IType.normal
+    },
+    totalCost: {
+      type: Number,
+      required: true
+    },
+    date:{
+      type: String,
+      required: true,
+      unique: true
     }
   },
   { timestamps: true }
