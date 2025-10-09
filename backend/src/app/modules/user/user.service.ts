@@ -1,8 +1,5 @@
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
 import { User } from "./user.model";
-import { IUser } from "./user.interface";
-import { envVars } from "../../config";
 import AppError from "../../errors/AppError";
 import httpStatus from "http-status";
 
