@@ -5,8 +5,8 @@ import { IROLE } from "../user/user.interface";
 
 const router = Router();
 
-router.get('/', getSummaryByDate)
 
 router.post('/', authCheck(IROLE.admin), getSummary)
+router.get('/:date', getSummaryByDate)
 
 export const SummaryRouter = router;
