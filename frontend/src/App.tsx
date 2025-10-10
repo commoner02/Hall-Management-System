@@ -7,11 +7,11 @@ import { AuthProvider } from "./contexts/AuthContext";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard"; 
-// import Summary from "./pages/Summary";
-// import ManageUsers from "./pages/admin/ManageUsers";
-// import GenerateSummary from "./pages/admin/GenerateSummary";
-// import CreateMeal from "./pages/manager/CreateMeal";
-// import NotFound from "./pages/NotFound";
+import Summary from "./pages/Summary";
+import ManageUsers from "./pages/admin/ManageUsers";
+import GenerateSummary from "./pages/admin/GenerateSummary";
+import CreateMeal from "./pages/manager/CreateMeal";
+import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
@@ -33,15 +33,15 @@ const App = () => (
                 </ProtectedRoute>
               }
             />src/pages/manager
-            {/* <Route
+            <Route
               path="/summary"
               element={
                 <ProtectedRoute>
                   <Summary />
                 </ProtectedRoute>
               }
-            /> */}
-            {/* <Route
+            />
+            <Route
               path="/admin/users"
               element={
                 <ProtectedRoute allowedRoles={['admin']}>
@@ -64,8 +64,8 @@ const App = () => (
                   <CreateMeal />
                 </ProtectedRoute>
               }
-            /> */}
-            {/* <Route path="*" element={<NotFound />} /> */}
+            />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </AuthProvider>
       </BrowserRouter>
