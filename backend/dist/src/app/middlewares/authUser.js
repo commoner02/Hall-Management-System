@@ -22,7 +22,7 @@ const authCheck = (...authRoles) => (req, res, next) => __awaiter(void 0, void 0
     const token = req.cookies.token || req.headers.authorization;
     // const token = req.cookies?.token;
     if (!token) {
-        throw new AppError_1.default(http_status_1.default.UNAUTHORIZED, "No token provided");
+        throw new AppError_1.default(http_status_1.default.UNAUTHORIZED, "User not logged in.");
     }
     const verifiedToken = (0, jwt_1.verifyToken)(token);
     if (!verifiedToken) {

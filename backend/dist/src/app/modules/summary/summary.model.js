@@ -5,11 +5,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Summary = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
+const summary_interface_1 = require("./summary.interface");
 const summarySchema = new mongoose_1.default.Schema({
-    date: { type: Date, unique: true, required: true },
-    totalLunch: { type: Number, default: 0 },
-    totalDinner: { type: Number, default: 0 },
-    totalCost: { type: Number, default: 0 },
-    mealRate: { type: Number, default: 0 }, // cost per meal
+    date: { type: String, unique: true, required: true },
+    totalMeal: {
+        type: Number,
+        required: true,
+    },
+    mealRate: { type: Number, enum: summary_interface_1.IRate, default: summary_interface_1.IRate.normal },
+    totalMoney: {
+        type: Number,
+        required: true,
+    },
 }, { timestamps: true });
 exports.Summary = mongoose_1.default.model("Summary", summarySchema);

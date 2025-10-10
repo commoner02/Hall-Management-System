@@ -15,5 +15,10 @@ const userSchema = new mongoose_1.default.Schema({
         enum: user_interface_1.IROLE,
         default: user_interface_1.IROLE.student,
     },
+    mealStatus: {
+        type: String,
+        enum: user_interface_1.IStatus,
+        default: user_interface_1.IStatus.on,
+    },
 }, { timestamps: true });
 exports.User = mongoose_1.default.model("User", userSchema);
