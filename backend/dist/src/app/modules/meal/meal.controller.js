@@ -112,7 +112,7 @@ const getMeal = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 exports.getMeal = getMeal;
 const getMealByDate = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { date } = req.body;
+        const { date } = req.params;
         if (!date) {
             throw new AppError_1.default(http_status_1.default.BAD_REQUEST, "A date is mandatory");
         }
