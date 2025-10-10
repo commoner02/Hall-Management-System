@@ -5,11 +5,32 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Meal = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
-const mealSchema = new mongoose_1.default.Schema({
-    user: { type: mongoose_1.default.Schema.Types.ObjectId, ref: "User", required: true },
-    date: { type: Date, required: true },
-    lunch: { type: Boolean, default: false },
-    dinner: { type: Boolean, default: false },
+const meal_interface_1 = require("./meal.interface");
+const MealSchema = new mongoose_1.default.Schema({
+    meals: {
+        type: [String],
+        required: true
+    },
+    items: {
+        type: [{
+                item: { type: String, required: true },
+                quantity: { type: Number, required: true },
+                price: { type: Number, required: true }
+            }],
+        required: true
+    },
+    type: {
+        type: String,
+        default: meal_interface_1.IType.normal
+    },
+    totalCost: {
+        type: Number,
+        required: true
+    },
+    date: {
+        type: String,
+        required: true,
+        unique: true
+    }
 }, { timestamps: true });
-mealSchema.index({ user: 1, date: 1 }, { unique: true });
-exports.Meal = mongoose_1.default.model("Meal", mealSchema);
+exports.Meal = mongoose_1.default.model("Meal", MealSchema);

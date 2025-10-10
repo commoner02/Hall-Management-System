@@ -23,7 +23,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateUser = exports.getMe = exports.loginUser = exports.registerUser = void 0;
+exports.getAll = exports.updateMeal = exports.updateUser = exports.getMe = exports.logout = exports.loginUser = exports.registerUser = void 0;
 const user_service_1 = require("./user.service");
 const user_model_1 = require("./user.model");
 const AppError_1 = __importDefault(require("../../errors/AppError"));
@@ -83,6 +83,22 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.loginUser = loginUser;
+const logout = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        (0, setCookie_1.setAuthCookie)(res, "");
+        (0, sendResponse_1.default)(res, {
+            success: true,
+            statusCode: http_status_1.default.OK,
+            message: "Logout successful",
+            data: null,
+        });
+    }
+    catch (err) {
+        console.error(err);
+        throw new AppError_1.default(http_status_1.default.BAD_REQUEST, err.message);
+    }
+});
+exports.logout = logout;
 const getMe = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const reqUser = req.user;
@@ -125,3 +141,40 @@ const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 exports.updateUser = updateUser;
+const updateMeal = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { id: userId, mealStatus } = req.body;
+        const user = yield user_model_1.User.findById(userId);
+        if (!user) {
+            throw new AppError_1.default(http_status_1.default.NOT_FOUND, "User does not exist.");
+        }
+        const userSafe = yield user_model_1.User.findByIdAndUpdate(user._id, { mealStatus }).select("-password");
+        (0, sendResponse_1.default)(res, {
+            success: true,
+            statusCode: http_status_1.default.OK,
+            message: "Meal status updated successfully.",
+            data: Object.assign({}, userSafe === null || userSafe === void 0 ? void 0 : userSafe.toObject()),
+        });
+    }
+    catch (err) {
+        console.error(err);
+        throw new AppError_1.default(http_status_1.default.BAD_REQUEST, err.message);
+    }
+});
+exports.updateMeal = updateMeal;
+const getAll = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const users = yield user_model_1.User.find();
+        (0, sendResponse_1.default)(res, {
+            success: true,
+            statusCode: http_status_1.default.OK,
+            message: "Users fetched successfully.",
+            data: users,
+        });
+    }
+    catch (err) {
+        console.error(err);
+        throw new AppError_1.default(http_status_1.default.BAD_REQUEST, err.message);
+    }
+});
+exports.getAll = getAll;
