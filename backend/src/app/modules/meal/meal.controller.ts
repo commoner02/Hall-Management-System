@@ -10,16 +10,17 @@ export const createMeal = async (req: Request, res: Response) => {
     const { meals, items, type } = req.body;
     let totalCost = 0;
     items?.forEach((item: IItem) => (totalCost += item.price * item.quantity));
+    const date = new Date(Date.now()).toLocaleDateString("en-GB", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+      })
     const payload = {
       meals,
       items,
       type,
       totalCost,
-      date: new Date(Date.now()).toLocaleDateString("en-GB", {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-      }),
+      date,
     };
     const meal = await Meal.create(payload);
     if (!meal) {
