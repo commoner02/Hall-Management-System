@@ -1,0 +1,14 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.MealRouter = void 0;
+const express_1 = require("express");
+const meal_controller_1 = require("./meal.controller");
+const authUser_1 = require("../../middlewares/authUser");
+const user_interface_1 = require("../user/user.interface");
+const router = (0, express_1.Router)();
+router.post('/', (0, authUser_1.authCheck)(user_interface_1.IROLE.manager), meal_controller_1.createMeal);
+router.patch('/:id', (0, authUser_1.authCheck)(user_interface_1.IROLE.manager), meal_controller_1.updateMeal);
+router.get('/date', meal_controller_1.getMealByDate);
+router.get('/:id', meal_controller_1.getMeal);
+router.get('/', meal_controller_1.getAllMeals);
+exports.MealRouter = router;
