@@ -100,7 +100,7 @@ export const getMeal = async (req: Request, res: Response) => {
 
 export const getMealByDate = async (req: Request, res: Response) => {
   try {
-    const { date } = req.body;
+    const { date } = req.params;
     if (!date) {
       throw new AppError(httpStatus.BAD_REQUEST, "A date is mandatory");
     }

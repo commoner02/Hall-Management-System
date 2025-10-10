@@ -6,9 +6,9 @@ import { IROLE } from "../user/user.interface";
 const router = Router()
 
 router.post('/', authCheck(IROLE.manager), createMeal)
-router.patch('/:id', authCheck(IROLE.manager), updateMeal)
-router.get('/date', getMealByDate)
-router.get('/:id', getMeal)
 router.get('/', getAllMeals)
+router.get('/date/:date', getMealByDate)
+router.get('/:id', getMeal)
+router.patch('/:id', authCheck(IROLE.manager), updateMeal)
 
 export const MealRouter = router;
