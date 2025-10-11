@@ -3,7 +3,7 @@
 import { ErrorRequestHandler } from 'express';
 import { TErrorSources } from '../interface/error';
 import AppError from '../errors/AppError';
-import config from '../config';
+import { envVars } from '../config';
 
 const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
 	// setting default values
@@ -41,7 +41,7 @@ const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
 		message,
 		errorSources,
 		err,
-		stack: config.NODE_ENV === 'development' ? err?.stack : null
+		stack: envVars.NODE_ENV === 'development' ? err?.stack : null
 	});
 };
 

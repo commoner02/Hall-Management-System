@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.SummaryRouter = void 0;
+const express_1 = require("express");
+const summary_controller_1 = require("./summary.controller");
+const authUser_1 = require("../../middlewares/authUser");
+const user_interface_1 = require("../user/user.interface");
+const router = (0, express_1.Router)();
+router.post('/', (0, authUser_1.authCheck)(user_interface_1.IROLE.admin), summary_controller_1.getSummary);
+router.get('/:date', summary_controller_1.getSummaryByDate);
+exports.SummaryRouter = router;

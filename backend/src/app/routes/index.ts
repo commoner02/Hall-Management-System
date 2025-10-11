@@ -1,12 +1,22 @@
 import express from "express";
-import { TestRoutes } from "../modules/testModule/test.route";
+import { UserRouter } from "../modules/user/user.route";
+import { MealRouter } from "../modules/meal/meal.route";
+import { SummaryRouter } from "../modules/summary/summary.route";
 
 const router = express.Router();
 
 const moduleRoutes = [
   {
-    path: "/test",
-    route: TestRoutes,
+    path: "/user",
+    route: UserRouter,
+  },
+  {
+    path: "/meal",
+    route: MealRouter,
+  },
+  {
+    path: "/summary",
+    route: SummaryRouter,
   },
 ];
 
