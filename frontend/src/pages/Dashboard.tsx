@@ -1,44 +1,74 @@
-import { useEffect, useState } from 'react';
-import { Layout } from '@/components/Layout';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { api, Meal } from '@/lib/api';
-import { useAuth } from '@/contexts/AuthContext';
-import { UtensilsCrossed, Clock, DollarSign } from 'lucide-react';
-import { toast } from 'sonner';
+import { useEffect, useState } from "react";
+import { Layout } from "@/components/Layout";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { api, Meal } from "@/lib/api";
+import { useAuth } from "@/contexts/AuthContext";
+import { UtensilsCrossed, Clock, DollarSign } from "lucide-react";
+import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
+import { Navigate, Router, useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
-  const { user } = useAuth();
+  const { user, refreshUser } = useAuth();
   const [todayMeal, setTodayMeal] = useState<Meal | null>(null);
   const [loading, setLoading] = useState(true);
-
+  const navigate = useNavigate();
   useEffect(() => {
     fetchTodayMeal();
   }, []);
 
   const fetchTodayMeal = async () => {
     try {
-      const dateStr = new Date(Date.now()).toLocaleDateString("en-GB", {
+      const temp = Date.now();
+      const dateStr = new Date(temp).toLocaleDateString("en-GB", {
         year: "numeric",
         month: "2-digit",
         day: "2-digit",
-      })
-      const today = dateStr.split('/').join('-')
-      console.log(today)
+      });
+      const today = dateStr.split("/").join("-");
+      console.log(today);
       const response = await api.getMealByDate(today);
-      console.log(response)
-      console.log(response.data)
-      console.log("why it is not working")
+      console.log(response);
+      console.log(response.data);
+      console.log("why it is not working");
       if (response.success && response.data) {
         setTodayMeal(response.data);
       }
     } catch (error) {
-      toast.error('Failed to fetch today\'s meal');
+      toast.error("Failed to fetch today's meal");
     } finally {
       setLoading(false);
     }
   };
 
-  const totalCost = todayMeal?.items.reduce((sum, item) => sum + item.price * item.quantity, 0) || 0;
+  const updateMealStatusFunc = async () => {
+    try {
+      const mealStatus = user.mealStatus === "On" ? "Off" : "On";
+      const response = await api.updateMealStatus(user?._id, mealStatus);
+      console.log(response);
+      console.log(response.data);
+      // console.log("why it is not working");
+      if (response.success && response.data) {
+        toast.success("Meal status updated.");
+      }
+    } catch (error) {
+      toast.error("Failed to fetch today's meal");
+    } finally {
+      refreshUser();
+    }
+  };
+
+  const totalCost =
+    todayMeal?.items.reduce(
+      (sum, item) => sum + item.price * item.quantity,
+      0
+    ) || 0;
 
   return (
     <Layout>
@@ -46,9 +76,11 @@ const Dashboard = () => {
         <div>
           <h1 className="text-3xl font-bold">Welcome back, {user?.name}!</h1>
           <p className="text-muted-foreground mt-2">
-            {user?.role === 'admin' && 'Manage students and generate daily summaries'}
-            {user?.role === 'manager' && 'Create and manage daily meals'}
-            {user?.role === 'student' && 'View and update your meal preferences'}
+            {user?.role === "admin" &&
+              "Manage students and generate daily summaries"}
+            {user?.role === "manager" && "Create and manage daily meals"}
+            {user?.role === "student" &&
+              "View and update your meal preferences"}
           </p>
         </div>
 
@@ -62,7 +94,9 @@ const Dashboard = () => {
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold capitalize">{user?.role}</div>
-              <p className="text-sm text-muted-foreground mt-1">{user?.email}</p>
+              <p className="text-sm text-muted-foreground mt-1">
+                {user?.email}
+              </p>
             </CardContent>
           </Card>
 
@@ -75,10 +109,10 @@ const Dashboard = () => {
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">
-                {new Date().toLocaleDateString('en-US', { 
-                  month: 'short', 
-                  day: 'numeric', 
-                  year: 'numeric' 
+                {new Date().toLocaleDateString("en-US", {
+                  month: "short",
+                  day: "numeric",
+                  year: "numeric",
                 })}
               </div>
             </CardContent>
@@ -93,11 +127,26 @@ const Dashboard = () => {
                 </div>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">৳{totalCost.toFixed(2)}</div>
-                <p className="text-sm text-muted-foreground mt-1">Today's meal</p>
+                <div className="text-2xl font-bold">
+                  ৳{totalCost.toFixed(2)}
+                </div>
+                <p className="text-sm text-muted-foreground mt-1">
+                  Today's meal
+                </p>
               </CardContent>
             </Card>
           )}
+        </div>
+
+        <div className="shadow-soft">
+          <div className="space-x-5 gradient-card shadow-soft flex flex-row justify-center items-center rounded-md p-5">
+            <span className="text-2xl font-semibold">You Meal Status: </span>
+            <Button onClick={() => updateMealStatusFunc()}>
+              <span className="text-xl font-semibold">
+                {user.mealStatus === "On" ? "Off" : "ON"}
+              </span>
+            </Button>
+          </div>
         </div>
 
         <Card className="shadow-soft">
@@ -139,11 +188,15 @@ const Dashboard = () => {
                       >
                         <div>
                           <p className="font-medium">{item.item}</p>
-                          <p className="text-sm text-muted-foreground">Qty: {item.quantity}</p>
+                          <p className="text-sm text-muted-foreground">
+                            Qty: {item.quantity}
+                          </p>
                         </div>
                         <div className="text-right">
                           <p className="font-semibold">৳{item.price}</p>
-                          <p className="text-xs text-muted-foreground">per unit</p>
+                          <p className="text-xs text-muted-foreground">
+                            per unit
+                          </p>
                         </div>
                       </div>
                     ))}
@@ -153,7 +206,9 @@ const Dashboard = () => {
                 <div className="rounded-lg bg-primary/5 p-4 border border-primary/20">
                   <div className="flex items-center justify-between">
                     <span className="font-semibold">Meal Type:</span>
-                    <span className="font-bold text-primary">{todayMeal.type}</span>
+                    <span className="font-bold text-primary">
+                      {todayMeal.type}
+                    </span>
                   </div>
                 </div>
               </div>

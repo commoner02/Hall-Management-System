@@ -20,7 +20,8 @@ const Summary = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const dateStr = new Date(Date.now()).toLocaleDateString("en-GB", {
+    const temp = Date.now();
+    const dateStr = new Date(temp).toLocaleDateString("en-GB", {
       year: "numeric",
       month: "2-digit",
       day: "2-digit",

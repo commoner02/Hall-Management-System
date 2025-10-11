@@ -12,6 +12,7 @@ export interface User {
   name: string;
   email: string;
   role: 'admin' | 'manager' | 'student';
+  mealStatus: 'On' | 'Off';
 }
 
 export interface LoginCredentials {
@@ -124,6 +125,19 @@ export const api = {
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',
       body: JSON.stringify(data),
+    });
+    return response.json();
+  },
+
+  async updateMealStatus(id: string, mealStatus: string ): Promise<ApiResponse<User>> {
+    const response = await fetch(`${API_BASE_URL}/user/update-meal`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({
+        id,
+        mealStatus
+      }),
     });
     return response.json();
   },
